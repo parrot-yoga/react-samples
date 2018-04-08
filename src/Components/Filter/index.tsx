@@ -1,8 +1,12 @@
 import * as React from 'react';
+import Constants from '../../Constants';
 
 import * as App from '../../App';
 
 import './style.css';
+
+const { HOMEPAGE_ROUTE } = Constants.Router;
+const { FILTER } = Constants.Global;
 
 export type State = string;
 export function State() { return ''; }
@@ -47,7 +51,7 @@ export const Component: React.SFC<{ store: App.Store }> = (
           type="text"
           value={store.getState().filter}
           onInput={evt => store.dispatch({
-            type: 'Filter',
+            type: FILTER as typeof FILTER,
             data: (evt.target as HTMLInputElement).value,
           })}
         />
@@ -61,7 +65,7 @@ export const Component: React.SFC<{ store: App.Store }> = (
           ))
         )}
         <br/>
-        <button onClick={store.PageDispatcher({ name: 'Homepage' })}>
+        <button onClick={store.PageDispatcher({ name: HOMEPAGE_ROUTE })}>
           Home
         </button>
       </div>

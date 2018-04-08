@@ -1,13 +1,17 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import Constants from './Constants';
 
 import * as Counter from './Components/Counter';
 import * as Filter from './Components/Filter';
 
+const { HOMEPAGE_ROUTE, COUNTER_ROUTE, FILTER_ROUTE } = Constants.Router;
+const { SET_WHOLE_STATE, SET_PAGE, COUNTER, FILTER } = Constants.Global;
+
 export type Page = (
-  { name: 'Homepage' } |
-  { name: 'Counter' } |
-  { name: 'Filter' } |
+  { name: typeof HOMEPAGE_ROUTE } |
+  { name: typeof COUNTER_ROUTE } |
+  { name: typeof FILTER_ROUTE } |
   never
 );
 
@@ -19,7 +23,7 @@ export type State = {
 
 export function State(seed: string): State {
   return {
-    page: { name: 'Homepage' },
+    page: { name: HOMEPAGE_ROUTE },
     counter: Counter.State(),
     filter: Filter.State(),
   };
@@ -27,19 +31,19 @@ export function State(seed: string): State {
 
 export type Action = (
   {
-    type: 'SetWholeState',
+    type: typeof SET_WHOLE_STATE,
     data: State,
   } |
   {
-    type: 'SetPage'
+    type: typeof SET_PAGE,
     data: Page,
   } |
   {
-    type: 'Counter',
+    type: typeof COUNTER,
     data: Counter.Action,
   } |
   {
-    type: 'Filter',
+    type: typeof FILTER,
     data: Filter.Action,
   } |
   never
@@ -47,21 +51,23 @@ export type Action = (
 
 export function reduce(state: State, action: Action): State {
   switch (action.type) {
-    case 'SetWholeState': {
+    case SET_WHOLE_STATE: {
       return action.data;
     }
 
-    case 'SetPage': {
+    case SET_PAGE: {
       return { ...state, page: action.data };
     }
 
-    case 'Counter': {
+    case COUNTER: {
       return { ...state, counter: Counter.reduce(state.counter, action.data) };
     }
 
-    case 'Filter': {
+    case FILTER: {
       return { ...state, filter: Filter.reduce(state.filter, action.data) };
     }
+
+    default: return state;
   }
 }
 
@@ -93,7 +99,7 @@ export function Store(seed: string): Store {
   const Dispatcher = (action: Action) => () => dispatch(action);
 
   const PageDispatcher = (page: Page) => (
-    Dispatcher({ type: 'SetPage', data: page })
+    Dispatcher({ type: SET_PAGE, data: page })
   );
 
   const subscribe = reduxStore.subscribe;
