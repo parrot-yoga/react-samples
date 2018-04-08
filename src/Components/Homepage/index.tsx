@@ -18,6 +18,9 @@ export const Component: React.SFC<{ store: App.Store }> = (
           <button onClick={store.PageDispatcher({ name: 'Counter' })}>
             Counter
           </button>
+          <button onClick={store.PageDispatcher({ name: 'Filter' })}>
+            Filter
+          </button>
         </div>
       </div>
     );

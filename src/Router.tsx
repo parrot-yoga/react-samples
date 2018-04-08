@@ -4,6 +4,7 @@ import * as App from './App';
 
 import * as Homepage from './Components/Homepage';
 import * as Counter from './Components/Counter';
+import * as Filter from './Components/Filter';
 
 export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
@@ -15,6 +16,9 @@ export const Component: React.SFC<{ store: App.Store }> = (
 
       case 'Counter':
         return <Counter.Component store={store}/>;
+
+      case 'Filter':
+        return <Filter.Component store={store}/>;
     }
   }
 );

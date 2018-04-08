@@ -2,22 +2,26 @@ import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import * as Counter from './Components/Counter';
+import * as Filter from './Components/Filter';
 
 export type Page = (
   { name: 'Homepage' } |
   { name: 'Counter' } |
+  { name: 'Filter' } |
   never
 );
 
 export type State = {
   page: Page,
   counter: Counter.State,
+  filter: Filter.State,
 };
 
 export function State(seed: string): State {
   return {
     page: { name: 'Homepage' },
     counter: Counter.State(),
+    filter: Filter.State(),
   };
 }
 
@@ -33,6 +37,10 @@ export type Action = (
   {
     type: 'Counter',
     data: Counter.Action,
+  } |
+  {
+    type: 'Filter',
+    data: Filter.Action,
   } |
   never
 );
@@ -50,11 +58,16 @@ export function reduce(state: State, action: Action): State {
     case 'Counter': {
       return { ...state, counter: Counter.reduce(state.counter, action.data) };
     }
+
+    case 'Filter': {
+      return { ...state, filter: Filter.reduce(state.filter, action.data) };
+    }
   }
 }
 
 export type Store = {
   getState: () => State,
+  dispatch: (action: Action) => void,
   Dispatcher: (action: Action) => () => void,
   PageDispatcher: (page: Page) => () => void,
   subscribe: (callback: () => void) => void
@@ -76,7 +89,8 @@ export function Store(seed: string): Store {
     (reduxStore.getState() || initState) as State
   );
 
-  const Dispatcher = (action: Action) => () => reduxStore.dispatch(action);
+  const dispatch = (action: Action) => reduxStore.dispatch(action);
+  const Dispatcher = (action: Action) => () => dispatch(action);
 
   const PageDispatcher = (page: Page) => (
     Dispatcher({ type: 'SetPage', data: page })
@@ -86,6 +100,7 @@ export function Store(seed: string): Store {
 
   return {
     getState,
+    dispatch,
     Dispatcher,
     PageDispatcher,
     subscribe,
