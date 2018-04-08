@@ -1,72 +1,68 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-export namespace App {
-  export type Page = (
-    { pageName: 'Homepage' } |
-    never
-  );
+export type Page = (
+  { name: 'Homepage' } |
+  never
+);
 
-  export type Type = {
-    page: Page,
+export type State = {
+  page: Page,
+};
+
+export function State(seed: string): State {
+  return {
+    page: { name: 'Homepage' },
   };
+}
 
-  export function create(seed: string): Type {
-    return {
-      page: { pageName: 'Homepage' },
-    };
+export type Action = (
+  {
+    type: 'SetWholeState',
+    data: State,
+  } |
+  {
+    type: 'SetPage'
+    data: Page,
+  } |
+  never
+);
+
+export function reduce(state: State, action: Action): State {
+  switch (action.type) {
+    case 'SetWholeState': {
+      return action.data;
+    }
+
+    case 'SetPage': {
+      return { ...state, page: action.data };
+    }
   }
+}
 
-  export type Action = (
-    {
-      type: 'SetWholeState',
-      data: Type,
-    } |
-    {
-      type: 'SetPage'
-      data: Page,
-    } |
-    never
+export type Store = {
+  getState: () => State,
+  dispatch: (action: Action) => void,
+  subscribe: (callback: () => void) => void
+};
+
+export function Store(seed: string): Store {
+  const initState = State(seed);
+
+  const store = createStore(
+    (state, action) => reduce(
+      state || initState,
+      action as Action,
+    ),
+    initState,
+    composeWithDevTools()
   );
 
-  export function reduce(appState: Type, action: Action): Type {
-    switch (action.type) {
-      case 'SetWholeState': {
-        return action.data;
-      }
-
-      case 'SetPage': {
-        return { ...appState, page: action.data };
-      }
-    }
-  }
-
-  export namespace Store {
-    export type Type = {
-      getState: () => App.Type,
-      dispatch: (action: Action) => void,
-      subscribe: (callback: () => void) => void
-    };
-
-    export function create(seed: string): Type {
-      const initState = App.create(seed);
-
-      const store = createStore(
-        (state, action) => App.reduce(
-          state || initState,
-          action as Action,
-        ),
-        initState,
-        composeWithDevTools()
-      );
-
-      return {
-        getState: () => (
-          (store.getState() || initState) as App.Type
-        ),
-        dispatch: ((action: Action) => store.dispatch(action)),
-        subscribe: store.subscribe,
-      };
-    }
-  }
+  return {
+    getState: () => (
+      (store.getState() || initState) as State
+    ),
+    dispatch: ((action: Action) => store.dispatch(action)),
+    subscribe: store.subscribe,
+  };
 }

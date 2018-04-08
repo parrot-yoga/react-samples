@@ -4,10 +4,10 @@ import Router from './Router';
 import registerServiceWorker from './registerServiceWorker';
 import './style.css';
 
-import { App } from './App';
+import * as App from './App';
 
 const seed = `${Math.random()}`;
-const store = App.Store.create(seed);
+const store = App.Store(seed);
 
 const storedState = localStorage.getItem('app-state');
 

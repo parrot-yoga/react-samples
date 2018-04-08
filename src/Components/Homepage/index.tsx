@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { App } from '../../App';
+import * as App from '../../App';
 
 import './style.css';
 
 const logo = require('../../logo.svg');
 
-export const Homepage: React.SFC<{ store: App.Store.Type }> = (
+export const Homepage: React.SFC<{ store: App.Store }> = (
   ({store}) => {
     return (
       <div className="homepage">

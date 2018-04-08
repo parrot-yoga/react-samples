@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { Homepage } from './Components/Homepage';
 
-import { App } from './App';
+import * as App from './App';
 
-type Props = {
-  store: App.Store.Type,
-};
-
-const Router: React.SFC<Props> = (
+const Router: React.SFC<{ store: App.Store }> = (
   ({store}) => {
     const state = store.getState();
 
-    switch (state.page.pageName) {
+    switch (state.page.name) {
       case 'Homepage':
         return <Homepage store={store}/>;
     }
