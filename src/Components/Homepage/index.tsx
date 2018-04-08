@@ -6,7 +6,7 @@ import './style.css';
 
 const logo = require('../../logo.svg');
 
-export const Homepage: React.SFC<{ store: App.Store }> = (
+export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
     return (
       <div className="homepage">
