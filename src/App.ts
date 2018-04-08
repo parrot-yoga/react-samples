@@ -1,18 +1,23 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import * as Counter from './Components/Counter';
+
 export type Page = (
   { name: 'Homepage' } |
+  { name: 'Counter' } |
   never
 );
 
 export type State = {
   page: Page,
+  counter: Counter.State,
 };
 
 export function State(seed: string): State {
   return {
     page: { name: 'Homepage' },
+    counter: Counter.State(),
   };
 }
 
@@ -24,6 +29,10 @@ export type Action = (
   {
     type: 'SetPage'
     data: Page,
+  } |
+  {
+    type: 'Counter',
+    data: Counter.Action,
   } |
   never
 );
@@ -37,19 +46,24 @@ export function reduce(state: State, action: Action): State {
     case 'SetPage': {
       return { ...state, page: action.data };
     }
+
+    case 'Counter': {
+      return { ...state, counter: Counter.reduce(state.counter, action.data) };
+    }
   }
 }
 
 export type Store = {
   getState: () => State,
-  dispatch: (action: Action) => void,
+  Dispatcher: (action: Action) => () => void,
+  PageDispatcher: (page: Page) => () => void,
   subscribe: (callback: () => void) => void
 };
 
 export function Store(seed: string): Store {
   const initState = State(seed);
 
-  const store = createStore(
+  const reduxStore = createStore(
     (state, action) => reduce(
       state || initState,
       action as Action,
@@ -58,11 +72,22 @@ export function Store(seed: string): Store {
     composeWithDevTools()
   );
 
+  const getState = () => (
+    (reduxStore.getState() || initState) as State
+  );
+
+  const Dispatcher = (action: Action) => () => reduxStore.dispatch(action);
+
+  const PageDispatcher = (page: Page) => (
+    Dispatcher({ type: 'SetPage', data: page })
+  );
+
+  const subscribe = reduxStore.subscribe;
+
   return {
-    getState: () => (
-      (store.getState() || initState) as State
-    ),
-    dispatch: ((action: Action) => store.dispatch(action)),
-    subscribe: store.subscribe,
+    getState,
+    Dispatcher,
+    PageDispatcher,
+    subscribe,
   };
 }

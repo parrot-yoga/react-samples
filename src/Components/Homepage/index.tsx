@@ -14,6 +14,11 @@ export const Component: React.SFC<{ store: App.Store }> = (
           <img src={logo} className="logo" alt="logo" />
           <h1 className="title">App</h1>
         </header>
+        <div className="body">
+          <button onClick={store.PageDispatcher({ name: 'Counter' })}>
+            Counter
+          </button>
+        </div>
       </div>
     );
   }

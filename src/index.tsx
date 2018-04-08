@@ -12,7 +12,7 @@ const store = App.Store(seed);
 const storedState = localStorage.getItem('app-state');
 
 if (storedState) {
-  store.dispatch({ type: 'SetWholeState', data: JSON.parse(storedState) });
+  store.Dispatcher({ type: 'SetWholeState', data: JSON.parse(storedState) })();
 }
 
 store.subscribe(() => {

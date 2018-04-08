@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.homepage .body {
+  padding: 20px;
+}
+
 .homepage .logo {
   height: 80px;
 }
