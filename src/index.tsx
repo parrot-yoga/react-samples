@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Router from './Router';
+import * as Router from './Router';
 import registerServiceWorker from './registerServiceWorker';
 import './style.css';
 
@@ -24,7 +24,7 @@ store.subscribe(() => {
 
 const render = () => {
   ReactDOM.render(
-    <Router store={store}/>,
+    <Router.Component store={store}/>,
     document.getElementById('root') as HTMLElement
   );
 };

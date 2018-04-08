@@ -3,7 +3,7 @@ import { Homepage } from './Components/Homepage';
 
 import * as App from './App';
 
-const Router: React.SFC<{ store: App.Store }> = (
+export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
     const state = store.getState();
 
@@ -13,5 +13,3 @@ const Router: React.SFC<{ store: App.Store }> = (
     }
   }
 );
-
-export default Router;
