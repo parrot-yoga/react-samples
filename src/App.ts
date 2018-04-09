@@ -2,8 +2,8 @@ import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import Constants from './Constants';
 
-import * as Counter from './Components/Counter';
-import * as Filter from './Components/Filter';
+import Counter from './Components/Counter/store';
+import Filter from './Components/Filter/store';
 
 const { HOMEPAGE_ROUTE, COUNTER_ROUTE, FILTER_ROUTE } = Constants.Router;
 const { SET_WHOLE_STATE, SET_PAGE, COUNTER, FILTER } = Constants.Global;
@@ -17,15 +17,15 @@ export type Page = (
 
 export type State = {
   page: Page,
-  counter: Counter.State,
-  filter: Filter.State,
+  counter: Counter.State.Type,
+  filter: Filter.State.Type,
 };
 
 export function State(seed: string): State {
   return {
     page: { name: HOMEPAGE_ROUTE },
-    counter: Counter.State(),
-    filter: Filter.State(),
+    counter: Counter.State.Create(),
+    filter: Filter.State.Create(),
   };
 }
 
@@ -40,11 +40,11 @@ export type Action = (
   } |
   {
     type: typeof COUNTER,
-    data: Counter.Action,
+    data: Counter.Actions.Combined,
   } |
   {
     type: typeof FILTER,
-    data: Filter.Action,
+    data: Filter.Actions.Combined,
   } |
   never
 );
@@ -60,11 +60,11 @@ export function reduce(state: State, action: Action): State {
     }
 
     case COUNTER: {
-      return { ...state, counter: Counter.reduce(state.counter, action.data) };
+      return { ...state, counter: Counter.Reduce.create(state.counter, action.data) };
     }
 
     case FILTER: {
-      return { ...state, filter: Filter.reduce(state.filter, action.data) };
+      return { ...state, filter: Filter.Reduce.create(state.filter, action.data) };
     }
 
     default: return state;
