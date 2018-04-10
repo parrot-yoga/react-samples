@@ -1,31 +1,31 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import Constants from './Constants';
+import * as GlobalConstants from './GlobalConstants';
 
-import Counter from './Components/Counter/store';
-import Filter from './Components/Filter/store';
+import * as Counter from './Components/Counter';
+import * as Filter from './Components/Filter';
+import * as Homepage from './Components/Homepage';
 
-const { HOMEPAGE_ROUTE, COUNTER_ROUTE, FILTER_ROUTE } = Constants.Router;
-const { SET_WHOLE_STATE, SET_PAGE, COUNTER, FILTER } = Constants.Global;
+const { SET_WHOLE_STATE, SET_PAGE } = GlobalConstants;
 
 export type Page = (
-  { name: typeof HOMEPAGE_ROUTE } |
-  { name: typeof COUNTER_ROUTE } |
-  { name: typeof FILTER_ROUTE } |
+  { name: typeof Homepage.HOMEPAGE_ROUTE } |
+  { name: typeof Counter.COUNTER_ROUTE } |
+  { name: typeof Filter.FILTER_ROUTE } |
   never
 );
 
 export type State = {
   page: Page,
-  counter: Counter.State.Type,
-  filter: Filter.State.Type,
+  counter: Counter.State,
+  filter: Filter.State,
 };
 
 export function State(seed: string): State {
   return {
-    page: { name: HOMEPAGE_ROUTE },
-    counter: Counter.State.Create(),
-    filter: Filter.State.Create(),
+    page: { name: Homepage.HOMEPAGE_ROUTE },
+    counter: Counter.createInitialState(),
+    filter: Filter.createInitialState(),
   };
 }
 
@@ -39,12 +39,12 @@ export type Action = (
     data: Page,
   } |
   {
-    type: typeof COUNTER,
-    data: Counter.Actions.Combined,
+    type: typeof Counter.COUNTER,
+    data: Counter.Action,
   } |
   {
-    type: typeof FILTER,
-    data: Filter.Actions.Combined,
+    type: typeof Filter.FILTER,
+    data: Filter.Action,
   } |
   never
 );
@@ -59,12 +59,12 @@ export function reduce(state: State, action: Action): State {
       return { ...state, page: action.data };
     }
 
-    case COUNTER: {
-      return { ...state, counter: Counter.Reduce.create(state.counter, action.data) };
+    case Counter.COUNTER: {
+      return { ...state, counter: Counter.reduce(state.counter, action.data) };
     }
 
-    case FILTER: {
-      return { ...state, filter: Filter.Reduce.create(state.filter, action.data) };
+    case Filter.FILTER: {
+      return { ...state, filter: Filter.reduce(state.filter, action.data) };
     }
 
     default: return state;
