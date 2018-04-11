@@ -1,11 +1,11 @@
 import * as Actions from './Actions';
-import * as Types from './Types';
 import * as Constants from './Constants';
+import { State } from './State';
 
 export const reduce = (
-  state: Types.State,
+  state: State,
   action: Actions.Action
-): Types.State => {
+): State => {
   const { count } = state;
 
   switch (action.type) {

@@ -24,7 +24,7 @@ export type State = {
 export function State(seed: string): State {
   return {
     page: { name: Homepage.HOMEPAGE_ROUTE },
-    counter: Counter.createInitialState(),
+    counter: Counter.State(),
     filter: Filter.createInitialState(),
   };
 }

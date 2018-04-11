@@ -1,5 +1,5 @@
 export * from './Actions';
-export * from './Types';
+export * from './State';
 export * from './Component';
 export * from './Constants';
 export * from './reduce';
