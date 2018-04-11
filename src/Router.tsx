@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import * as App from './App';
 
 import * as Homepage from './Components/Homepage';
@@ -11,13 +10,13 @@ export const Component: React.SFC<{ store: App.Store }> = (
     const state = store.getState();
 
     switch (state.page.name) {
-      case 'Homepage':
+      case Homepage.HOMEPAGE_ROUTE:
         return <Homepage.Component store={store}/>;
 
-      case 'Counter':
+      case Counter.COUNTER_ROUTE:
         return <Counter.Component store={store}/>;
 
-      case 'Filter':
+      case Filter.FILTER_ROUTE:
         return <Filter.Component store={store}/>;
     }
   }

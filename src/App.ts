@@ -1,13 +1,17 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import * as GlobalConstants from './GlobalConstants';
 
 import * as Counter from './Components/Counter';
 import * as Filter from './Components/Filter';
+import * as Homepage from './Components/Homepage';
+
+const { SET_WHOLE_STATE, SET_PAGE } = GlobalConstants;
 
 export type Page = (
-  { name: 'Homepage' } |
-  { name: 'Counter' } |
-  { name: 'Filter' } |
+  { name: typeof Homepage.HOMEPAGE_ROUTE } |
+  { name: typeof Counter.COUNTER_ROUTE } |
+  { name: typeof Filter.FILTER_ROUTE } |
   never
 );
 
@@ -19,27 +23,27 @@ export type State = {
 
 export function State(seed: string): State {
   return {
-    page: { name: 'Homepage' },
-    counter: Counter.State(),
-    filter: Filter.State(),
+    page: { name: Homepage.HOMEPAGE_ROUTE },
+    counter: Counter.createInitialState(),
+    filter: Filter.createInitialState(),
   };
 }
 
 export type Action = (
   {
-    type: 'SetWholeState',
+    type: typeof SET_WHOLE_STATE,
     data: State,
   } |
   {
-    type: 'SetPage'
+    type: typeof SET_PAGE,
     data: Page,
   } |
   {
-    type: 'Counter',
+    type: typeof Counter.COUNTER,
     data: Counter.Action,
   } |
   {
-    type: 'Filter',
+    type: typeof Filter.FILTER,
     data: Filter.Action,
   } |
   never
@@ -47,21 +51,23 @@ export type Action = (
 
 export function reduce(state: State, action: Action): State {
   switch (action.type) {
-    case 'SetWholeState': {
+    case SET_WHOLE_STATE: {
       return action.data;
     }
 
-    case 'SetPage': {
+    case SET_PAGE: {
       return { ...state, page: action.data };
     }
 
-    case 'Counter': {
+    case Counter.COUNTER: {
       return { ...state, counter: Counter.reduce(state.counter, action.data) };
     }
 
-    case 'Filter': {
+    case Filter.FILTER: {
       return { ...state, filter: Filter.reduce(state.filter, action.data) };
     }
+
+    default: return state;
   }
 }
 
@@ -93,7 +99,7 @@ export function Store(seed: string): Store {
   const Dispatcher = (action: Action) => () => dispatch(action);
 
   const PageDispatcher = (page: Page) => (
-    Dispatcher({ type: 'SetPage', data: page })
+    Dispatcher({ type: SET_PAGE, data: page })
   );
 
   const subscribe = reduxStore.subscribe;
