@@ -1,8 +1,8 @@
 import { Action } from 'redux';
-import * as Constant from './Constants';
+import * as Constants from './Constants';
 
 // Declare constants
-const { INCREMENT, DECREMENT } = Constant;
+const { INCREMENT, DECREMENT } = Constants;
 
 // State type
 export type State = {

@@ -2,16 +2,16 @@ import * as React from 'react';
 import * as App from '../../App';
 import './style.css';
 
-import * as Type from './Types';
-import * as Constant from './Constants';
+import * as Types from './Types';
+import * as Constants from './Constants';
 import * as Actions from './Actions';
-import * as HomepageConstant from '../Homepage';
+import * as HomepageConstant from '../Homepage'; // TODO
 
 export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
-    const Dispatcher: (action: Type.Action) => () => void = (
+    const Dispatcher: (action: Types.Action) => () => void = (
       (action) => store.Dispatcher({
-        type: Constant.COUNTER,
+        type: Constants.COUNTER,
         data: action,
       })
     );
