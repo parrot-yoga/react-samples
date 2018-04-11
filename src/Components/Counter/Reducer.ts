@@ -6,11 +6,11 @@ export const reduce = (
     action: Type.Action
 ): Type.State => {
     const { count } = state;
-      
+
     switch (action.type) {
-        case Constant.INCREMENT_COUNTER:
+        case Constant.INCREMENT:
             return { ...state, count: count + action.data };
-        case Constant.DECREMENT_COUNTER:
+        case Constant.DECREMENT:
             return { ...state, count: count - action.data };
         default:
             return state;

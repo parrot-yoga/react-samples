@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import * as Constant from './Constants';
 
 // Declare constants
-const { INCREMENT_COUNTER, DECREMENT_COUNTER } = Constant;
+const { INCREMENT, DECREMENT } = Constant;
 
 // State type
 export type State = {
@@ -18,12 +18,12 @@ export function createInitialState(): State {
 
 // Action types
 export interface IncrementCounterAction extends Action {
-    type: typeof INCREMENT_COUNTER;
+    type: typeof INCREMENT;
     data: number;
 }
 
 export interface DecrementCounterAction extends Action {
-    type: typeof DECREMENT_COUNTER;
+    type: typeof DECREMENT;
     data: number;
 }
 

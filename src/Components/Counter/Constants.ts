@@ -5,5 +5,5 @@ export const COUNTER = '@@global/COUNTER';
 export const COUNTER_ROUTE = '@@route/COUNTER';
 
 // Action constants
-export const INCREMENT_COUNTER = '@@counter/INCREMENT_COUNTER';
-export const DECREMENT_COUNTER = '@@counter/DECREMENT_COUNTER';
+export const INCREMENT = '@@counter/INCREMENT_COUNTER';
+export const DECREMENT = '@@counter/DECREMENT_COUNTER';

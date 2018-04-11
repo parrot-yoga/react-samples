@@ -3,12 +3,12 @@ import * as Type from './Types';
 import * as Constant from './Constants';
 
 // Define actions
-export const IncrementCounter: ActionCreator<Type.IncrementCounterAction> = (amount: number) => ({
-    type: Constant.INCREMENT_COUNTER,
+export const Increment: ActionCreator<Type.IncrementCounterAction> = (amount: number) => ({
+    type: Constant.INCREMENT,
     data: amount
 });
 
-export const DecrementCounter: ActionCreator<Type.DecrementCounterAction> = (amount: number) => ({
-    type: Constant.DECREMENT_COUNTER,
+export const Decrement: ActionCreator<Type.DecrementCounterAction> = (amount: number) => ({
+    type: Constant.DECREMENT,
     data: amount
 });
