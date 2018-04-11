@@ -5,7 +5,7 @@ import './style.css';
 import * as Types from './Types';
 import * as Constants from './Constants';
 import * as Actions from './Actions';
-import * as HomepageConstant from '../Homepage'; // TODO
+import * as HomepageConstants from '../Homepage/Constants';
 
 export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
@@ -22,7 +22,7 @@ export const Component: React.SFC<{ store: App.Store }> = (
         <button onClick={Dispatcher(Actions.Decrement(1))}>-</button>
         <button onClick={Dispatcher(Actions.Increment(1))}>+</button>
         <br/><br/>
-        <button onClick={store.PageDispatcher({ name: HomepageConstant.HOMEPAGE_ROUTE })}>
+        <button onClick={store.PageDispatcher({ name: HomepageConstants.HOMEPAGE_ROUTE })}>
           Home
         </button>
       </div>
