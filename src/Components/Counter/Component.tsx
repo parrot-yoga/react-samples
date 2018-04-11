@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as App from '../../App';
 import './style.css';
 
-import * as Constants from './Constants';
 import * as Actions from './Actions';
 import * as HomepageConstants from '../Homepage/Constants';
 
@@ -10,7 +9,7 @@ export const Component: React.SFC<{ store: App.Store }> = (
   ({store}) => {
     const Dispatcher: (action: Actions.Action) => () => void = (
       (action) => store.Dispatcher({
-        type: Constants.COUNTER,
+        type: Actions.COUNTER,
         data: action,
       })
     );

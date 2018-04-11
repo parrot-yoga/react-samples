@@ -1,5 +1,4 @@
 import * as Actions from './Actions';
-import * as Constants from './Constants';
 import { State } from './State';
 
 export const reduce = (
@@ -9,9 +8,9 @@ export const reduce = (
   const { count } = state;
 
   switch (action.type) {
-    case Constants.INCREMENT:
+    case Actions.INCREMENT:
       return { ...state, count: count + action.data };
-    case Constants.DECREMENT:
+    case Actions.DECREMENT:
       return { ...state, count: count - action.data };
     default:
       return state;

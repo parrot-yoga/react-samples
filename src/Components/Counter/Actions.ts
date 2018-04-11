@@ -1,4 +1,8 @@
-import { INCREMENT, DECREMENT } from './Constants';
+export const COUNTER = '@@global/COUNTER';
+export const COUNTER_ROUTE = '@@route/COUNTER';
+
+export const INCREMENT = '@@counter/INCREMENT';
+export const DECREMENT = '@@counter/DECREMENT';
 
 export type Increment = {
   type: typeof INCREMENT;
