@@ -12,7 +12,5 @@ export const reduce = (
       return { ...state, count: count + action.data };
     case Actions.DECREMENT:
       return { ...state, count: count - action.data };
-    default:
-      return state;
   }
 };
