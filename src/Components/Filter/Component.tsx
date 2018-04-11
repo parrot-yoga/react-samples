@@ -10,9 +10,9 @@ export const Component: React.SFC<{ store: App.Store }> = (
     return (
       <div className="filter">
         <input
-            type="text"
-            value={store.getState().filter}
-            onInput={evt => store.dispatch({
+          type="text"
+          value={store.getState().filter}
+          onInput={evt => store.dispatch({
             type: Constant.FILTER,
             data: (evt.target as HTMLInputElement).value,
           })}
