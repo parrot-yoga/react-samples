@@ -1,13 +1,27 @@
-import * as Types from './Types';
-import * as Constants from './Constants';
+import { INCREMENT, DECREMENT } from './Constants';
 
-// Define actions
-export const Increment = (amount: number): Types.IncrementCounterAction => ({
-  type: Constants.INCREMENT,
+export type Increment = {
+  type: typeof INCREMENT;
+  data: number;
+};
+
+export const Increment = (amount: number): Increment => ({
+  type: INCREMENT,
   data: amount
 });
 
-export const Decrement = (amount: number): Types.DecrementCounterAction => ({
-  type: Constants.DECREMENT,
+export type Decrement = {
+  type: typeof DECREMENT;
+  data: number;
+};
+
+export const Decrement = (amount: number): Decrement => ({
+  type: DECREMENT,
   data: amount
 });
+
+// Combined action type
+export type Action =
+  | Increment
+  | Decrement
+;
