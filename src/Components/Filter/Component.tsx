@@ -13,7 +13,7 @@ const highlight = (text: string, searchText: string): JSX.Element | null => {
   }
 
   return (
-    <p>
+    <p className="textBlock">
       <span>{text.slice(0, matchPos)}</span>
       <span className="highlight">
         {text.slice(matchPos, matchPos + searchText.length)}
