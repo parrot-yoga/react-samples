@@ -1,14 +1,31 @@
-import { ActionCreator } from 'redux';
-import * as Type from './Types';
-import * as Constant from './Constants';
+export const COUNTER = '@@global/COUNTER';
+export const COUNTER_ROUTE = '@@route/COUNTER';
 
-// Define actions
-export const IncrementCounter: ActionCreator<Type.IncrementCounterAction> = (amount: number) => ({
-    type: Constant.INCREMENT_COUNTER,
-    data: amount
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+
+export type Increment = {
+  type: typeof INCREMENT;
+  data: number;
+};
+
+export const Increment = (amount: number): Increment => ({
+  type: INCREMENT,
+  data: amount
 });
 
-export const DecrementCounter: ActionCreator<Type.DecrementCounterAction> = (amount: number) => ({
-    type: Constant.DECREMENT_COUNTER,
-    data: amount
+export type Decrement = {
+  type: typeof DECREMENT;
+  data: number;
+};
+
+export const Decrement = (amount: number): Decrement => ({
+  type: DECREMENT,
+  data: amount
 });
+
+// Combined action type
+export type Action =
+  | Increment
+  | Decrement
+;
